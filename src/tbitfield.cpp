@@ -147,19 +147,9 @@ TBitField TBitField::operator|(const TBitField &bf) // операция "или"
 
 TBitField TBitField::operator&(const TBitField &bf) // операция "и"
 {
-	TBitField SMP(1);
-	if (BitLen>=bf.BitLen)
-	{
-		SMP=bf;
-		for (int i=0;i<BitLen;i++)
-		SMP.pMem[i]&=pMem[i];
-	}
-	else
-	{ 
-		SMP=*this;
-		for (int i=0;i<bf.BitLen;i++)
-			SMP.pMem[i]&=bf.pMem[i];
-	}
+	TBitField SMP(min(BitLen, bf.BitLen));
+	for (int i = 0; i < SMP.MemLen; i++)
+		SMP.pMem[i] = pMem[i] & bf.pMem[i];
 	return SMP;
 }
 
